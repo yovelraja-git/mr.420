@@ -79,10 +79,10 @@
 
   <script>
     const questions = [
-      "Do you like surprises?",
-      "Do I make you smile? 😁",
-      "Can I steal all your snacks? 🍫",
-      "Will you be my Valentine? 💖"
+      "Nandhini, do you secretly smile like an idiot when you see my name on your phone? 📱😌",
+      "Do you agree that we look dangerously cute together and should be legally protected? 🥰👀",
+      "If we were alone right now… would you still pretend to be ‘innocent’? 😏🙈",
+      "So… will you be my Valentine and tolerate my nonsense, kisses, and bad jokes forever? 💖😆"
     ];
 
     let index = 0;
@@ -96,14 +96,23 @@
       if (index < questions.length) {
         questionEl.textContent = questions[index];
       } else {
-        card.innerHTML = "<h1>Yayyy 💘</h1><p>You are officially my Valentine 💖🥰</p><p>I love you infinity ♾️</p>";
+        card.innerHTML = "<h1>Yessss ❤️</h1><p>Nandhini, you are officially my Valentine 💖😍</p><p>Now come here… your surprise hugs & kisses 😘 are pending.</p><p>Happy Valentine’s Day 💕</p>";
       }
     });
 
     noBtn.addEventListener('mouseover', () => {
-      const x = Math.random() * 250;
-      const y = Math.random() * 80;
+      const x = Math.random() * 320;
+      const y = Math.random() * 140;
       noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    // YES button playful bounce
+    yesBtn.addEventListener('mouseover', () => {
+      yesBtn.style.transform = 'scale(1.15) rotate(3deg)';
+    });
+
+    yesBtn.addEventListener('mouseout', () => {
+      yesBtn.style.transform = 'scale(1) rotate(0deg)';
     });
 
     // Floating hearts
