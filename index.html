@@ -4,8 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>💖 Valentine Surprise 💖</title>
+
   <style>
     * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
     body {
       margin: 0;
       height: 100vh;
@@ -15,6 +17,7 @@
       align-items: center;
       overflow: hidden;
     }
+
     .card {
       background: white;
       padding: 30px;
@@ -25,103 +28,164 @@
       box-shadow: 0 20px 40px rgba(0,0,0,0.2);
       animation: pop 0.6s ease;
     }
+
     @keyframes pop {
       from { transform: scale(0.7); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
+
     h1 { color: #ff4d6d; }
     p { font-size: 18px; }
+
     .buttons {
       margin-top: 25px;
       position: relative;
-      height: 120px;
+      height: 200px;
     }
+
     button {
       padding: 12px 22px;
       border-radius: 30px;
       border: none;
-      font-size: 16px;
+      font-size: 15px;
       cursor: pointer;
       position: absolute;
       transition: 0.3s;
     }
-    #yesBtn {
+
+    .yesBtn {
       background: #ff4d6d;
       color: white;
-      left: 30px;
     }
+
+    .yesBtn:nth-child(1) { left: 10px; top: 0; }
+    .yesBtn:nth-child(2) { left: 40px; top: 60px; }
+    .yesBtn:nth-child(3) { left: 80px; top: 120px; }
+
     #noBtn {
       background: #ddd;
-      right: 30px;
+      right: 10px;
+      top: 60px;
     }
+
     .heart {
       position: absolute;
       color: rgba(255,255,255,0.6);
       animation: float 6s linear infinite;
       font-size: 20px;
     }
+
     @keyframes float {
       from { transform: translateY(100vh); }
       to { transform: translateY(-10vh); }
     }
   </style>
 </head>
+
 <body>
 
   <div class="card" id="card">
-    <h1>Hey Love 💕</h1>
-    <p id="question">Do you like surprises?</p>
+    <h1>Hey Nandhini 💕</h1>
+    <p id="question">Does distance make you miss me… or want me more? 😌❤️</p>
+
     <div class="buttons">
-      <button id="yesBtn">Yes 😍</button>
+      <button class="yesBtn">Yes 😍</button>
+      <button class="yesBtn">Definitely Yes 😘</button>
+      <button class="yesBtn">Absolutely Yes 🔥</button>
       <button id="noBtn">No 🙈</button>
     </div>
   </div>
 
   <script>
+    /* QUESTIONS — Set C (Long Distance Dirty) */
     const questions = [
-      "Nandhini, do you secretly smile like an idiot when you see my name on your phone? 📱😌",
-      "Do you agree that we look dangerously cute together and should be legally protected? 🥰👀",
-      "If we were alone right now… would you still pretend to be ‘innocent’? 😏🙈",
-      "So… will you be my Valentine and tolerate my nonsense, kisses, and bad jokes forever? 💖😆"
+      "Does distance make you miss me… or want me more? 😌❤️",
+      "When we text late at night, do you ever forget how far away I am? 📱✨",
+      "If I could teleport for just one minute… do you know exactly what I’d do? 😏🙈",
+      "Until that day comes… will you be my Valentine and keep choosing me every day? 💖🥹"
     ];
 
     let index = 0;
-    const questionEl = document.getElementById('question');
-    const yesBtn = document.getElementById('yesBtn');
-    const noBtn = document.getElementById('noBtn');
-    const card = document.getElementById('card');
+    let noTryCount = 0;
 
-    yesBtn.addEventListener('click', () => {
-      index++;
-      if (index < questions.length) {
-        questionEl.textContent = questions[index];
-      } else {
-        card.innerHTML = "<h1>Yessss ❤️</h1><p>Nandhini, you are officially my Valentine 💖😍</p><p>Now come here… your surprise hugs & kisses 😘 are pending.</p><p>Happy Valentine’s Day 💕</p>";
+    const questionEl = document.getElementById("question");
+    const yesBtns = document.querySelectorAll(".yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const card = document.getElementById("card");
+
+    /* YES BUTTON LOGIC */
+    yesBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        index++;
+        if (index < questions.length) {
+          questionEl.textContent = questions[index];
+          btn.style.transform = `scale(${1 + Math.random() * 0.25})`;
+        } else {
+          card.innerHTML = `
+            <h1>Yessss ❤️</h1>
+            <p>Nandhini, you are officially my Valentine 💖😍</p>
+            <p>Distance lost today… hugs & kisses are pending 😘😏</p>
+            <p>Happy Valentine’s Day 💕</p>
+          `;
+        }
+      });
+    });
+
+    /* NO BUTTON EVIL LOGIC */
+    function moveNoButton() {
+      const x = Math.random() * 300;
+      const y = Math.random() * 150;
+      const texts = ["No 🙈", "Nope 😜", "Nice try 😏", "Almost 😆", "Hehe 😝"];
+
+      noBtn.style.transform =
+        `translate(${x}px, ${y}px) rotate(${Math.random()*20 - 10}deg)`;
+
+      noBtn.textContent = texts[Math.floor(Math.random() * texts.length)];
+
+      if (navigator.vibrate) navigator.vibrate(80);
+    }
+
+    function evilNoReaction() {
+      noTryCount++;
+
+      if (noTryCount === 3) {
+        alert("Why are you trying SO hard to say NO? 😏💖");
       }
+
+      if (noTryCount === 5) {
+        alert("Okay okay 😆 I give up… but you don’t really mean NO 😉❤️");
+        noBtn.textContent = "Okay… Yes 😳💘";
+        noBtn.style.background = "#ff4d6d";
+        noBtn.style.color = "white";
+      }
+    }
+
+    // Desktop
+    noBtn.addEventListener("mouseover", () => {
+      moveNoButton();
+      evilNoReaction();
     });
 
-    noBtn.addEventListener('mouseover', () => {
-      const x = Math.random() * 320;
-      const y = Math.random() * 140;
-      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    // Mobile (Android)
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoButton();
+      evilNoReaction();
     });
 
-    // YES button playful bounce
-    yesBtn.addEventListener('mouseover', () => {
-      yesBtn.style.transform = 'scale(1.15) rotate(3deg)';
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      moveNoButton();
+      evilNoReaction();
     });
 
-    yesBtn.addEventListener('mouseout', () => {
-      yesBtn.style.transform = 'scale(1) rotate(0deg)';
-    });
-
-    // Floating hearts
+    /* FLOATING HEARTS */
     setInterval(() => {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.textContent = '❤';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = "❤";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
       document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 6000);
     }, 500);
