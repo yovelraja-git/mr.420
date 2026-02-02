@@ -1,195 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>💖 Valentine Surprise 💖</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💖 Valentine Surprise 💖</title>
 
-  <style>
-    * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+<style>
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
 
-    body {
-      margin: 0;
-      height: 100vh;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
 
-    .card {
-      background: white;
-      padding: 30px;
-      border-radius: 20px;
-      width: 90%;
-      max-width: 420px;
-      text-align: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-      animation: pop 0.6s ease;
-    }
+.card {
+  background: white;
+  padding: 28px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  animation: pop 0.6s ease;
+}
 
-    @keyframes pop {
-      from { transform: scale(0.7); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
+@keyframes pop {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 
-    h1 { color: #ff4d6d; }
-    p { font-size: 18px; }
+h1 {
+  color: #ff4d6d;
+}
 
-    .buttons {
-      margin-top: 25px;
-      position: relative;
-      height: 200px;
-    }
+p {
+  font-size: 18px;
+  min-height: 60px;
+}
 
-    button {
-      padding: 12px 22px;
-      border-radius: 30px;
-      border: none;
-      font-size: 15px;
-      cursor: pointer;
-      position: absolute;
-      transition: 0.3s;
-    }
+.cute-cat {
+  width: 130px;
+  margin: 15px auto;
+  display: block;
+  animation: wiggle 2s infinite ease-in-out;
+  transition: 0.3s;
+}
 
-    .yesBtn {
-      background: #ff4d6d;
-      color: white;
-    }
+@keyframes wiggle {
+  0%,100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(5deg) scale(1.05); }
+}
 
-    .yesBtn:nth-child(1) { left: 10px; top: 0; }
-    .yesBtn:nth-child(2) { left: 40px; top: 60px; }
-    .yesBtn:nth-child(3) { left: 80px; top: 120px; }
+.buttons {
+  margin-top: 25px;
+  position: relative;
+  height: 160px;
+}
 
-    #noBtn {
-      background: #ddd;
-      right: 10px;
-      top: 60px;
-    }
+button {
+  padding: 12px 22px;
+  border-radius: 30px;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  position: absolute;
+  transition: 0.3s;
+  white-space: nowrap;
+}
 
-    .heart {
-      position: absolute;
-      color: rgba(255,255,255,0.6);
-      animation: float 6s linear infinite;
-      font-size: 20px;
-    }
+.yes {
+  background: #ff4d6d;
+  color: white;
+}
 
-    @keyframes float {
-      from { transform: translateY(100vh); }
-      to { transform: translateY(-10vh); }
-    }
-  </style>
+#yes1 { left: 20px; top: 10px; }
+#yes2 { right: 20px; top: 10px; }
+#yes3 { left: 80px; bottom: 10px; }
+
+#noBtn {
+  background: #ddd;
+  right: 20px;
+  bottom: 10px;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="card" id="card">
-    <h1>Hey Nandhini 💕</h1>
-    <p id="question">Does distance make you miss me… or want me more? 😌❤️</p>
+<div class="card" id="card">
+  <h1>Hey Love 💕</h1>
 
-    <div class="buttons">
-      <button class="yesBtn">Yes 😍</button>
-      <button class="yesBtn">Definitely Yes 😘</button>
-      <button class="yesBtn">Absolutely Yes 🔥</button>
-      <button id="noBtn">No 🙈</button>
-    </div>
+  <img id="catImg" src="cat1.png" class="cute-cat" alt="Cute cat">
+
+  <p id="question">
+    Nandhini, does distance make you miss me… or want me more? 😌❤️
+  </p>
+
+  <div class="buttons">
+    <button class="yes" id="yes1">Yes 😍</button>
+    <button class="yes" id="yes2">Definitely Yes 😘</button>
+    <button class="yes" id="yes3">Absolutely Yes 💖</button>
+    <button id="noBtn">No 🙈</button>
   </div>
+</div>
 
-  <script>
-    /* QUESTIONS — Set C (Long Distance Dirty) */
-    const questions = [
-      "Does distance make you miss me… or want me more? 😌❤️",
-      "When we text late at night, do you ever forget how far away I am? 📱✨",
-      "If I could teleport for just one minute… do you know exactly what I’d do? 😏🙈",
-      "Until that day comes… will you be my Valentine and keep choosing me every day? 💖🥹"
-    ];
+<!-- HEARTBEAT AUDIO -->
+<audio id="heartbeat" src="heartbeat.mp3" preload="auto"></audio>
 
-    let index = 0;
-    let noTryCount = 0;
+<script>
+const steps = [
+  {
+    q: "Nandhini, does distance make you miss me… or want me more? 😌❤️",
+    img: "cat1.png"
+  },
+  {
+    q: "When we text late at night, do you ever forget how far away I am? 📱✨",
+    img: "cat2.png"
+  },
+  {
+    q: "If I could teleport for just one minute… do you know exactly what I’d do? 😏🙈",
+    img: "cat3.png"
+  },
+  {
+    q: "Until that day comes… will you be my Valentine and keep choosing me every day? 💖🥹",
+    img: "cat4.png"
+  }
+];
 
-    const questionEl = document.getElementById("question");
-    const yesBtns = document.querySelectorAll(".yesBtn");
-    const noBtn = document.getElementById("noBtn");
-    const card = document.getElementById("card");
+let index = 0;
+const questionEl = document.getElementById('question');
+const catImg = document.getElementById('catImg');
+const card = document.getElementById('card');
+const noBtn = document.getElementById('noBtn');
+const heartbeat = document.getElementById('heartbeat');
 
-    /* YES BUTTON LOGIC */
-    yesBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        index++;
-        if (index < questions.length) {
-          questionEl.textContent = questions[index];
-          btn.style.transform = `scale(${1 + Math.random() * 0.25})`;
-        } else {
-          card.innerHTML = `
-            <h1>Yessss ❤️</h1>
-            <p>Nandhini, you are officially my Valentine 💖😍</p>
-            <p>Distance lost today… hugs & kisses are pending 😘😏</p>
-            <p>Happy Valentine’s Day 💕</p>
-          `;
-        }
-      });
-    });
+/* YES BUTTON LOGIC WITH HEARTBEAT */
+document.querySelectorAll('.yes').forEach(btn => {
+  btn.addEventListener('click', () => {
+    // Play heartbeat
+    heartbeat.currentTime = 0;
+    heartbeat.volume = 0.5;
+    heartbeat.play();
 
-    /* NO BUTTON EVIL LOGIC */
-    function moveNoButton() {
-      const x = Math.random() * 300;
-      const y = Math.random() * 150;
-      const texts = ["No 🙈", "Nope 😜", "Nice try 😏", "Almost 😆", "Hehe 😝"];
-
-      noBtn.style.transform =
-        `translate(${x}px, ${y}px) rotate(${Math.random()*20 - 10}deg)`;
-
-      noBtn.textContent = texts[Math.floor(Math.random() * texts.length)];
-
-      if (navigator.vibrate) navigator.vibrate(80);
+    index++;
+    if (index < steps.length) {
+      questionEl.textContent = steps[index].q;
+      catImg.src = steps[index].img;
+    } else {
+      card.innerHTML = `
+        <h1>Yessss ❤️</h1>
+        <img src="cat4.png" class="cute-cat">
+        <p>Nandhini, you are officially my Valentine 💖😍</p>
+        <p>Distance can’t stop us 😌</p>
+        <p>Happy Valentine’s Day 💕</p>
+      `;
+      heartbeat.play();
     }
+  });
+});
 
-    function evilNoReaction() {
-      noTryCount++;
+/* EVIL ANDROID + DESKTOP NO BUTTON */
+function moveNoButton() {
+  const x = Math.random() * 250;
+  const y = Math.random() * 120;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  catImg.style.transform = 'rotate(-6deg)';
+  setTimeout(() => catImg.style.transform = 'rotate(0deg)', 300);
+}
 
-      if (noTryCount === 3) {
-        alert("Why are you trying SO hard to say NO? 😏💖");
-      }
-
-      if (noTryCount === 5) {
-        alert("Okay okay 😆 I give up… but you don’t really mean NO 😉❤️");
-        noBtn.textContent = "Okay… Yes 😳💘";
-        noBtn.style.background = "#ff4d6d";
-        noBtn.style.color = "white";
-      }
-    }
-
-    // Desktop
-    noBtn.addEventListener("mouseover", () => {
-      moveNoButton();
-      evilNoReaction();
-    });
-
-    // Mobile (Android)
-    noBtn.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      moveNoButton();
-      evilNoReaction();
-    });
-
-    noBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      moveNoButton();
-      evilNoReaction();
-    });
-
-    /* FLOATING HEARTS */
-    setInterval(() => {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.textContent = "❤";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
-    }, 500);
-  </script>
+noBtn.addEventListener('mouseover', moveNoButton);
+noBtn.addEventListener('touchstart', moveNoButton);
+</script>
 
 </body>
 </html>
