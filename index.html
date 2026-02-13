@@ -6,10 +6,7 @@
 <title>💖 Valentine Surprise 💖</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
+* { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
 body {
   margin: 0;
@@ -21,6 +18,20 @@ body {
   overflow: hidden;
 }
 
+/* Floating hearts */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 18px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 0.8; }
+  100% { transform: translateY(-110vh) scale(1.6); opacity: 0; }
+}
+
 .card {
   background: white;
   padding: 28px;
@@ -29,22 +40,9 @@ body {
   max-width: 420px;
   text-align: center;
   box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-  animation: pop 0.6s ease;
 }
 
-@keyframes pop {
-  from { transform: scale(0.7); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-h1 {
-  color: #ff4d6d;
-}
-
-p {
-  font-size: 18px;
-  min-height: 60px;
-}
+h1 { color: #ff4d6d; }
 
 .cute-cat {
   width: 130px;
@@ -57,6 +55,12 @@ p {
 @keyframes wiggle {
   0%,100% { transform: rotate(0deg) scale(1); }
   50% { transform: rotate(5deg) scale(1.05); }
+}
+
+.timer {
+  font-size: 14px;
+  color: #888;
+  margin-top: 6px;
 }
 
 .buttons {
@@ -72,24 +76,15 @@ button {
   font-size: 15px;
   cursor: pointer;
   position: absolute;
-  transition: 0.3s;
-  white-space: nowrap;
 }
 
-.yes {
-  background: #ff4d6d;
-  color: white;
-}
+.yes { background: #ff4d6d; color: white; }
 
 #yes1 { left: 20px; top: 10px; }
 #yes2 { right: 20px; top: 10px; }
 #yes3 { left: 80px; bottom: 10px; }
 
-#noBtn {
-  background: #ddd;
-  right: 20px;
-  bottom: 10px;
-}
+#noBtn { background: #ddd; right: 20px; bottom: 10px; }
 </style>
 </head>
 
@@ -98,88 +93,150 @@ button {
 <div class="card" id="card">
   <h1>Hey Love 💕</h1>
 
-  <img id="catImg" src="cat1.png" class="cute-cat" alt="Cute cat">
+  <img id="catImg" src="cat1.png" class="cute-cat">
 
   <p id="question">
     Nandhini, does distance make you miss me… or want me more? 😌❤️
   </p>
 
+  <div class="timer" id="loveTimer"></div>
+
   <div class="buttons">
     <button class="yes" id="yes1">Yes 😍</button>
     <button class="yes" id="yes2">Definitely Yes 😘</button>
     <button class="yes" id="yes3">Absolutely Yes 💖</button>
-    <button id="noBtn">No da porukki🙈</button>
+    <button id="noBtn">No 🙈</button>
   </div>
 </div>
 
-<!-- HEARTBEAT AUDIO -->
-<audio id="heartbeat" src="heartbeat.mp3" preload="auto"></audio>
+<audio id="heartbeat" src="heartbeat.mp3"></audio>
 
 <script>
+/* ---------------- LOVE TIMER ---------------- */
+/* SET YOUR LOVE START DATE HERE */
+const loveStartDate = new Date("2023-08-01 00:00:00");
+
+function updateLoveTimer(){
+  const now = new Date();
+  const diff = now - loveStartDate;
+
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff / (1000*60*60)) % 24);
+  const mins = Math.floor((diff / (1000*60)) % 60);
+  const secs = Math.floor((diff / 1000) % 60);
+
+  document.getElementById("loveTimer").innerHTML =
+    `💞 Loving you for <b>${days}</b> days ${hours}h ${mins}m ${secs}s`;
+}
+setInterval(updateLoveTimer,1000);
+updateLoveTimer();
+
+/* ---------------- FLOATING HEARTS ---------------- */
+function createHeart(){
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "💖";
+  heart.style.left = Math.random()*100 + "vw";
+  heart.style.animationDuration = (4 + Math.random()*3) + "s";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),7000);
+}
+setInterval(createHeart,300);
+
+/* ---------------- QUESTIONS ---------------- */
 const steps = [
-  {
-    q: "Nandhini, does distance make you miss me… or want me more? 😌❤️",
-    img: "cat1.png"
-  },
-  {
-    q: "When we text late at night, do you ever forget how far away I am? 📱✨",
-    img: "cat2.png"
-  },
-  {
-    q: "If I could teleport for just one minute… do you know exactly what I’d do? 😏🙈",
-    img: "cat3.png"
-  },
-  {
-    q: "Until that day comes… will you be my Valentine and keep choosing me every day? 💖🥹",
-    img: "cat4.png"
-  }
+  { q:"Nandhini, does distance make you miss me… or want me more? 😌❤️", img:"cat1.png" },
+  { q:"When we text late at night, do you forget how far I am? 📱✨", img:"cat2.png" },
+  { q:"If I teleport for 1 minute… do you know what I’d do? 😏🙈", img:"cat3.png" },
+  { q:"Will you be my Valentine forever? 💖🥹", img:"cat4.png" }
+];
+
+const cuteReplies = [
+  "Hehe I knew it 😌❤️",
+  "Awww you are blushing right? 😘",
+  "Distance losing… Love winning 💖",
+  "Too late… You are trapped in my love 😜"
+];
+
+const noMessages = [
+  "❌ Error 404: NO option not found 😜",
+  "⚠️ Warning: Heart secretly chose YES 💖",
+  "🚫 System blocked NO 😌",
+  "💘 Love virus detected 😍",
+  "🥺 Final Warning: Accept love ❤️"
 ];
 
 let index = 0;
+let noClickCount = 0;
+
 const questionEl = document.getElementById('question');
 const catImg = document.getElementById('catImg');
 const card = document.getElementById('card');
 const noBtn = document.getElementById('noBtn');
 const heartbeat = document.getElementById('heartbeat');
 
-/* YES BUTTON LOGIC WITH HEARTBEAT */
-document.querySelectorAll('.yes').forEach(btn => {
-  btn.addEventListener('click', () => {
-    // Play heartbeat
-    heartbeat.currentTime = 0;
-    heartbeat.volume = 0.5;
-    heartbeat.play();
+/* ---------------- YES BUTTON ---------------- */
+document.querySelectorAll('.yes').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    heartbeat.currentTime=0;
+    heartbeat.play().catch(()=>{});
+
+    if(index < cuteReplies.length){
+      setTimeout(()=>alert(cuteReplies[index]),200);
+    }
 
     index++;
-    if (index < steps.length) {
+
+    if(index < steps.length){
       questionEl.textContent = steps[index].q;
       catImg.src = steps[index].img;
     } else {
+      launchConfetti();
       card.innerHTML = `
         <h1>Yessss ❤️</h1>
         <img src="cat4.png" class="cute-cat">
-        <p>Nandhini, you are officially my Valentine 💖😍</p>
-        <p>Distance can’t stop us 😌</p>
+        <p>You are officially my Valentine 💖😍</p>
+        <p>Forever mine 😜❤️</p>
         <p>Happy Valentine’s Day 💕</p>
       `;
-      heartbeat.play();
     }
   });
 });
 
-/* EVIL ANDROID + DESKTOP NO BUTTON */
-function moveNoButton() {
-  const x = Math.random() * 250;
-  const y = Math.random() * 120;
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
-  catImg.style.transform = 'rotate(-6deg)';
-  setTimeout(() => catImg.style.transform = 'rotate(0deg)', 300);
-}
+/* ---------------- NO BUTTON ---------------- */
+noBtn.addEventListener('click',()=>{
+  if(noClickCount < noMessages.length){
+    alert(noMessages[noClickCount]);
+    noClickCount++;
+  } else {
+    alert("😈 Too late… Only YES allowed 💖");
+  }
+});
 
-noBtn.addEventListener('mouseover', moveNoButton);
-noBtn.addEventListener('touchstart', moveNoButton);
+/* ---------------- CONFETTI ---------------- */
+function launchConfetti(){
+  for(let i=0;i<120;i++){
+    const conf = document.createElement("div");
+    conf.style.position="fixed";
+    conf.style.width="6px";
+    conf.style.height="6px";
+    conf.style.background="hsl("+Math.random()*360+",100%,60%)";
+    conf.style.left=Math.random()*100+"vw";
+    conf.style.top="-10px";
+    conf.style.opacity="0.9";
+    conf.style.transform="rotate("+Math.random()*360+"deg)";
+    conf.style.transition="top 2.5s linear, transform 2.5s linear";
+    document.body.appendChild(conf);
+
+    setTimeout(()=>{
+      conf.style.top="110vh";
+      conf.style.transform="rotate(720deg)";
+    },50);
+
+    setTimeout(()=>conf.remove(),2600);
+  }
+}
 </script>
 
 </body>
 </html>
-
