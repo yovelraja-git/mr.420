@@ -26,6 +26,7 @@ body {
   animation: floatUp 6s linear infinite;
   opacity: 0.8;
 }
+
 @keyframes floatUp {
   0% { transform: translateY(0) scale(1); opacity: 0.8; }
   100% { transform: translateY(-110vh) scale(1.6); opacity: 0; }
@@ -50,6 +51,7 @@ h1 { color: #ff4d6d; }
   animation: wiggle 2s infinite ease-in-out;
   transition: 0.3s;
 }
+
 @keyframes wiggle {
   0%,100% { transform: rotate(0deg) scale(1); }
   50% { transform: rotate(5deg) scale(1.05); }
@@ -93,14 +95,16 @@ button {
 
   <img id="catImg" src="cat1.png" class="cute-cat">
 
-  <p id="question"></p>
+  <p id="question">
+    Nandhini, does distance make you miss me… or want me more? 😌❤️
+  </p>
 
   <div class="timer" id="loveTimer"></div>
 
   <div class="buttons">
-    <button class="yes" id="yes1"></button>
-    <button class="yes" id="yes2"></button>
-    <button class="yes" id="yes3"></button>
+    <button class="yes" id="yes1">Yes 😍</button>
+    <button class="yes" id="yes2">Definitely Yes 😘</button>
+    <button class="yes" id="yes3">Absolutely Yes 💖</button>
     <button id="noBtn">No 🙈</button>
   </div>
 </div>
@@ -109,15 +113,18 @@ button {
 
 <script>
 /* ---------------- LOVE TIMER ---------------- */
-const loveStartDate = new Date("2023-08-01 00:00:00"); // CHANGE DATE HERE
+/* SET YOUR LOVE START DATE HERE */
+const loveStartDate = new Date("2023-08-01 00:00:00");
 
 function updateLoveTimer(){
   const now = new Date();
   const diff = now - loveStartDate;
+
   const days = Math.floor(diff / (1000*60*60*24));
   const hours = Math.floor((diff / (1000*60*60)) % 24);
   const mins = Math.floor((diff / (1000*60)) % 60);
   const secs = Math.floor((diff / 1000) % 60);
+
   document.getElementById("loveTimer").innerHTML =
     `💞 Loving you for <b>${days}</b> days ${hours}h ${mins}m ${secs}s`;
 }
@@ -136,28 +143,19 @@ function createHeart(){
 }
 setInterval(createHeart,300);
 
-/* ---------------- QUESTIONS + ANSWERS ---------------- */
+/* ---------------- QUESTIONS ---------------- */
 const steps = [
-  {
-    q:"Nandhini, does distance make you miss me… or want me more? 😌❤️",
-    img:"cat1.png",
-    answers:["Miss you 😘","Want you more 😍","Both da 😜"]
-  },
-  {
-    q:"When we text late night, what happens to you? 📱✨",
-    img:"cat2.png",
-    answers:["I smile 😊","I feel safe 💖","I miss you 🥺"]
-  },
-  {
-    q:"If I teleport for 1 minute… what should I do? 😏🙈",
-    img:"cat3.png",
-    answers:["Hug me 🤗","Don’t leave 😭","Kiss me 😘"]
-  },
-  {
-    q:"Will you be my Valentine forever? 💖🥹",
-    img:"cat4.png",
-    answers:["Always ❤️","Forever 😍","No escape 😜"]
-  }
+  { q:"Nandhini, does distance make you miss me… or want me more? 😌❤️", img:"cat1.png" },
+  { q:"When we text late at night, do you forget how far I am? 📱✨", img:"cat2.png" },
+  { q:"If I teleport for 1 minute… do you know what I’d do? 😏🙈", img:"cat3.png" },
+  { q:"Will you be my Valentine forever? 💖🥹", img:"cat4.png" }
+];
+
+const cuteReplies = [
+  "Hehe I knew it 😌❤️",
+  "Awww you are blushing right? 😘",
+  "Distance losing… Love winning 💖",
+  "Too late… You are trapped in my love 😜"
 ];
 
 const noMessages = [
@@ -176,25 +174,22 @@ const catImg = document.getElementById('catImg');
 const card = document.getElementById('card');
 const noBtn = document.getElementById('noBtn');
 const heartbeat = document.getElementById('heartbeat');
-const yesButtons = document.querySelectorAll('.yes');
-
-function loadStep(){
-  questionEl.textContent = steps[index].q;
-  catImg.src = steps[index].img;
-  yesButtons.forEach((btn,i)=>{
-    btn.textContent = steps[index].answers[i];
-  });
-}
-loadStep();
 
 /* ---------------- YES BUTTON ---------------- */
-yesButtons.forEach(btn=>{
+document.querySelectorAll('.yes').forEach(btn=>{
   btn.addEventListener('click',()=>{
     heartbeat.currentTime=0;
     heartbeat.play().catch(()=>{});
+
+    if(index < cuteReplies.length){
+      setTimeout(()=>alert(cuteReplies[index]),200);
+    }
+
     index++;
+
     if(index < steps.length){
-      loadStep();
+      questionEl.textContent = steps[index].q;
+      catImg.src = steps[index].img;
     } else {
       launchConfetti();
       card.innerHTML = `
@@ -221,17 +216,27 @@ noBtn.addEventListener('click',()=>{
 /* ---------------- CONFETTI ---------------- */
 function launchConfetti(){
   for(let i=0;i<120;i++){
-    const conf=document.createElement("div");
+    const conf = document.createElement("div");
     conf.style.position="fixed";
     conf.style.width="6px";
     conf.style.height="6px";
     conf.style.background="hsl("+Math.random()*360+",100%,60%)";
     conf.style.left=Math.random()*100+"vw";
     conf.style.top="-10px";
+    conf.style.opacity="0.9";
+    conf.style.transform="rotate("+Math.random()*360+"deg)";
     conf.style.transition="top 2.5s linear, transform 2.5s linear";
     document.body.appendChild(conf);
+
     setTimeout(()=>{
       conf.style.top="110vh";
       conf.style.transform="rotate(720deg)";
     },50);
-    setTimeout(()=>conf.remove(),2600
+
+    setTimeout(()=>conf.remove(),2600);
+  }
+}
+</script>
+
+</body>
+</html>
