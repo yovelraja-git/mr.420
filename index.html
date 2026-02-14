@@ -126,7 +126,7 @@ function updateLoveTimer(){
   const secs = Math.floor((diff / 1000) % 60);
 
   document.getElementById("loveTimer").innerHTML =
-    `💞 Loving you for <b>${days}</b> days ${hours}h ${mins}m ${secs}s`;
+    `💞 together around😁 <b>${days}</b> days ${hours}h ${mins}m ${secs}s`;
 }
 setInterval(updateLoveTimer,1000);
 updateLoveTimer();
@@ -145,10 +145,10 @@ setInterval(createHeart,300);
 
 /* ---------------- QUESTIONS ---------------- */
 const steps = [
-  { q:"Nandhini, does distance make you miss me… or want me more? 😌❤️", img:"cat1.png" },
-  { q:"naan unakku set aaven la oru nalla purusana😁? 📱✨",  img:"cat2.png" },
-  { q:"If I teleport for 1 minute… do you know what I’d do?answer a whatsapp pannu 😁 😏🙈", img:"cat3.png" },
-  { q:"Will you be my Valentine forever? 💖🥹", img:"cat4.png" }
+  { q:"Nandhini, does distance make you miss me… or want me more? 😌❤️", img:"cat1.jpg" },
+  { q:"naan unakku set aaven la oru nalla purusana😁? 📱✨",  img:"cat2.jpg" },
+  { q:"If I teleport for 1 minute… do you know what I’d do?answer a whatsapp pannu 😁 😏🙈", img:"cat3.jpg" },
+  { q:"Will you be my Valentine forever? 💖🥹", img:"cat4.jpg" }
 ];
 
 const cuteReplies = [
@@ -194,7 +194,7 @@ document.querySelectorAll('.yes').forEach(btn=>{
       launchConfetti();
       card.innerHTML = `
         <h1>Yessss ❤️</h1>
-        <img src="cat4.png" class="cute-cat">
+        <img src="cat4.jpg" class="cute-cat">
         <p>You are officially my Valentine 💖😍</p>
         <p>Forever mine 😜❤️</p>
         <p>Happy Valentine’s Day 💕</p>
@@ -240,4 +240,5 @@ function launchConfetti(){
 
 </body>
 </html>
+
 
